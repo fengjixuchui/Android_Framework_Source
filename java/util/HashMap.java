@@ -336,6 +336,9 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     *
+     * ^ (位异或运算)两个数转为二进制，然后从高位开始比较，如果相同则为0，不相同则为1。
+     * ~ (位非运算符)如果位为0，结果是1，如果位为1，结果是0.
      */
     static final int hash(Object key) {
         int h;
@@ -669,6 +672,10 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     }
 
     /**
+     * 1.7的transfer方法会存在扩容死循环问题
+     * 参考：https://www.jianshu.com/p/4d1cad21853b
+     * https://zhuanlan.zhihu.com/p/67915754
+     *
      * Initializes or doubles table size.  If null, allocates in
      * accord with initial capacity target held in field threshold.
      * Otherwise, because we are using power-of-two expansion, the
